@@ -1,55 +1,55 @@
 module pixelGeneration (clk, rst, switch, pixel_x, pixel_y, push, video_on, rgb);
 
-input 						clk, rst, switch;
-input 			[9:0] pixel_x, pixel_y;
-input 						video_on;
-input 			[3:0] push;
-output reg 	[2:0] rgb;
+input                          clk, rst, switch;
+input 			 [9:0] pixel_x, pixel_y;
+input                          video_on;
+input 			 [3:0] push;
+output reg 	         [2:0] rgb;
 
-wire 							square_on;
+wire                           square_on;
 
-reg 				[9:0] x_left_cnt, x_right_cnt; // The counters to set square localization on x-axis
-reg 				[9:0] y_down_cnt, y_up_cnt; // The counters to set square localization on y-axis
+reg 			 [9:0] x_left_cnt, x_right_cnt; // The counters to set square localization on x-axis
+reg 			 [9:0] y_down_cnt, y_up_cnt; // The counters to set square localization on y-axis
 
-reg 			 [29:0] max_cnt; // counters for speed options to use in clock division
-reg 			 [29:0] mid_cnt; // counters for speed options to use in clock division
+reg 			[29:0] max_cnt; // counters for speed options to use in clock division
+reg 			[29:0] mid_cnt; // counters for speed options to use in clock division
 
 /* Debounce for push buttons */
 reg 			[29:0] counter = 0; // for debounce
-reg							 slow_clk; // for clock division
+reg			       slow_clk; // for clock division
 reg 			 [3:0] push_q1; // ff for debounce
 reg 			 [3:0] push_q2; // ff for debounce
-wire       [3:0] push_debounced;
+wire                     [3:0] push_debounced;
 
 always @(posedge clk) begin
-	if (rst) begin
-		counter <= 0;
-	end else begin
-		counter <= (counter >= max_cnt) ? 0 : counter + 1;
-		slow_clk <= (counter < mid_cnt) ? 1'b0 : 1'b1;
-	end
+  if (rst) begin
+    counter <= 0;
+  end else begin
+    counter <= (counter >= max_cnt) ? 0 : counter + 1;
+    slow_clk <= (counter < mid_cnt) ? 1'b0 : 1'b1;
+  end
 end
 
 always @(posedge slow_clk) begin
-	push_q1 <= push;
-	push_q2 <= push_q1;
+  push_q1 <= push;
+  push_q2 <= push_q1;
 end
 
 assign push_debounced = push_q1 & push_q2;
 
 /* mux for various speed (There are two speed to move square, those are selected by switch) */
 always @(*) begin
-	case(switch)
-		0: begin 
-			max_cnt = 249999; mid_cnt = 125000; 
-		end
-		1: begin 
-			max_cnt = 999999; mid_cnt = 500000; 
-		end
-		default: begin
-			max_cnt = 249999; mid_cnt = 125000; 
-		end
-	endcase
+  case(switch)
+    0: begin 
+      max_cnt = 249999; mid_cnt = 125000; 
+    end
+    1: begin 
+      max_cnt = 999999; mid_cnt = 500000; 
+    end
+    default: begin
+      max_cnt = 249999; mid_cnt = 125000; 
+    end
+ endcase
 end
 
 always @(posedge slow_clk) begin
