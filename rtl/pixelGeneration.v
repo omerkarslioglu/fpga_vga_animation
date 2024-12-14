@@ -78,11 +78,11 @@ end
 
 /* Pixel Color */
 always @(*) begin
-	rgb = 3'b000;
-	if(video_on) begin
-		if (square_on) rgb = 3'b010;
-		else rgb = 3'b001;
-	end
+  rgb = 3'b000;
+  if(video_on) begin
+    if (square_on) rgb = 3'b010;
+    else rgb = 3'b001;
+  end
 end
 
 assign square_on = ((pixel_x > x_left_cnt && pixel_x < x_right_cnt) && (pixel_y > y_down_cnt && pixel_y < y_up_cnt)); // set the position of square
