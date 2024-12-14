@@ -1,8 +1,8 @@
-module vgaSync(clk, rst, hsync, vsync, video_on, p_tick, pixel_x, pixel_y);
+module vgaSync (clk, rst, hsync, vsync, video_on, p_tick, pixel_x, pixel_y);
 	
-input clk, rst;
-output hsync, vsync, video_on, p_tick;
-output [9:0] pixel_x, pixel_y;
+input 				clk, rst;
+output 				hsync, vsync, video_on, p_tick;
+output  [9:0] pixel_x, pixel_y;
 	
 // constant declaration
 // VGA 640-by-480 sync parameters
@@ -16,23 +16,23 @@ parameter VB = 33; // v. back (bottom) border
 parameter VR = 2; // v. retrace
 
 // mod_2 counter
-reg [1:0] mod4;
-wire [1:0] mod4Next;
+reg 		[1:0] mod4;
+wire 		[1:0] mod4Next;
 
 // sync counters
-reg [9:0] h_count, h_countNext;
-reg [9:0] v_count, v_countNext;
+reg 		[9:0] h_count, h_countNext;
+reg 		[9:0] v_count, v_countNext;
 
-reg v_sync, h_sync;
-wire v_syncNext, h_syncNext;
-wire h_end, v_end, pixel_tick;
-
+reg 					v_sync, h_sync;
+wire 					v_syncNext, h_syncNext;
+wire 					h_end, v_end, pixel_tick;
+		
 always @(posedge clk) begin
-		mod4 <= mod4Next;
-		v_count <= v_countNext;
-		h_count <= h_countNext;
-		v_sync <= v_syncNext;
-		h_sync <= h_syncNext;
+	mod4 <= mod4Next;
+	v_count <= v_countNext;
+	h_count <= h_countNext;
+	v_sync <= v_syncNext;
+	h_sync <= h_syncNext;
 end
 
 // mod2 circuit to generate 25 MHz enable tick
@@ -49,10 +49,10 @@ assign v_end = (v_count == (VD+VF+VB+VR-1));
 // next-statelogic of mod-800 horizontal sync counter
 always @(*) begin
 	h_countNext = h_count;
-	if(rst)
+	if (rst)
 		h_countNext = 0;
-	else if(pixel_tick) // 25 MHz pulse
-		if(h_end)
+	else if (pixel_tick) // 25 MHz pulse
+		if (h_end)
 			h_countNext = 0;
 		else
 			h_countNext = h_count + 1;
@@ -61,10 +61,10 @@ end
 // next-state logic of mod-525 vertical sync counter
 always @(*) begin
 	v_countNext = v_count;
-	if(rst)
+	if (rst)
 		v_countNext = 0;
-	else if(pixel_tick & h_end)
-		if(v_end)
+	else if (pixel_tick & h_end)
+		if (v_end)
 			v_countNext = 0;
 		else
 			v_countNext = v_count + 1;

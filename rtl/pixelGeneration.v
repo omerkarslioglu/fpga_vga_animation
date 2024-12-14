@@ -80,10 +80,8 @@ end
 always @(*) begin
 	rgb = 3'b000;
 	if(video_on) begin
-		if (square_on)
-			rgb = 3'b010;
-		else
-			rgb = 3'b001;
+		if (square_on) rgb = 3'b010;
+		else rgb = 3'b001;
 	end
 end
 
