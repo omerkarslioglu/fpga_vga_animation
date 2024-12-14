@@ -6,14 +6,29 @@ It's a motion of square animation to be implemented on the BASYS3 FPGA board.
   <img title="" alt="Windowing Operation" src="/docs/images/setup.jpeg"width="400" height="auto">
 </p>
 
-Design Description:
+### Design Description:
 
 * There is a square on the screen; you should control it using 4 push buttons. 
 There are 4 directions: up, down, left, and right. 
 There is also a switch that toggles between two-speed levels.
 
+### Files Tree:
+```
+│   README.md
+│
+├───constraint
+│       VGAanimatedObject.xdc
+│
+├───docs
+│   └───images
+│
+└───rtl
+        pixelGeneration.v
+        VGAanimatedObject.v
+        vgaSync.v
+```
 
-Inputs and outputs of top module for this application:
+### Inputs and outputs of top module for this application:
 
 <p align="center">
   <img title="" alt="Windowing Operation" src="/docs/images/top.png"width="400" height="auto">
@@ -25,3 +40,5 @@ Inputs and outputs of top module for this application:
 <p align="center">
   <img title="" alt="Windowing Operation" src="/docs/images/inside_of_top.png"width="400" height="auto">
 </p>
+
+Thanks for reviewing the design. If you have any questions you can contact me on ``omerkarsliogluu@gmail.com``
