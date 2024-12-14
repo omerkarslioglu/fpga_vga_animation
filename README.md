@@ -3,7 +3,7 @@
 It's a motion of square animation to be implemented on the BASYS3 FPGA board.
 
 <p align="center">
-  <img title="" alt="Windowing Operation" src="/docs/images/setup.png"width="700" height="auto">
+  <img title="" alt="Windowing Operation" src="/docs/images/setup.jpeg"width="700" height="auto">
 </p>
 
 Design Description:
