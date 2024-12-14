@@ -2,6 +2,8 @@
 
 It's a motion of square animation to be implemented on the BASYS3 FPGA board.
 
+Video link: https://www.youtube.com/watch?v=JUf8FeBw8NU
+
 <p align="center">
   <img title="" alt="Windowing Operation" src="/docs/images/setup.jpeg"width="400" height="auto">
 </p>
